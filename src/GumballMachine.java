@@ -53,7 +53,7 @@ public class GumballMachine
             this.initCoinMap();
             System.out.println("All coins are ejected.");
         } else if (this.getTotalValue(coinMap) != this.gumballPrice) {
-            System.out.println( "The coin value not match the gumball price, and your coins will be ejected!" ) ;
+            System.out.println( "The coin value not match the gumball x price, and your coins will be ejected!" ) ;
             this.initCoinMap();
         } else {
             this.gumballNum--;
