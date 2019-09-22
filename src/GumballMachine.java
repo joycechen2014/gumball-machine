@@ -1,89 +1,90 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class GumballMachine
 {
 
-    private int num_gumballs;
-    private boolean has_quarter;
-    private Map<Integer,Integer> coin_type;
-    private int price;
-    private int curr_money;
+    private int gumballNum = 0;
+    private boolean dispenseBall = false;
+    private Map<Integer,Integer> coinMap = new HashMap<Integer, Integer>();
+    private int gumballPrice = 0;
+    private int currentMoney = 0;
 
-    public GumballMachine(int size , Set<Integer> coin_type, int price)
+    public GumballMachine(int size , int[] coinTypes, int gumballPrice)
     {
-        this.coin_type = new HashMap<Integer, Integer>();
-        // initialise instance variables
-        this.num_gumballs = size;
-        for(Integer key : coin_type) {    // delete coins;
-            this.coin_type.put(key,0);
+        // initialise Gumball Machine variables
+        this.gumballNum = size;
+        // set coin HashMap base on coin type
+        for(int coinType : coinTypes) {
+            // put coin type and number into coin map
+            this.coinMap.put(coinType, 0);
         }
-       // this.coin_type.addAll(coin_type);
-        this.price = price;
-        this.curr_money = 0;
+        this.gumballPrice = gumballPrice;
     }
 
-    public void insertQuarter(int coin)
+    public void insertCoin(int coinType)
     {
-        System.out.println("You insert ￠" + coin + ".");
-         if(this.coin_type.containsKey(coin)) {
-             this.coin_type.put(coin,this.coin_type.get(coin) + 1);
-             this.curr_money += coin;
+        System.out.println("You insert ￠" + coinType + ".");
+         if(!this.coinMap.containsKey(coinType)) {
+             System.out.println("This coin type ￠ " + coinType + " is not accepted by this machine.");
+             // all coins are ejected
+             this.initCoinMap();
+             System.out.println("All coins are ejected.");
+
          }
          else {
-             System.out.println("We can not accept ￠" + coin);
-             System.out.println("You have ejected 1" + " coin of " + coin);
-             this.ejectQuarter();
-             this.curr_money = 0;
+             this.coinMap.put(coinType, this.coinMap.get(coinType) + 1);
+         }
+
+         if (this.getTotalValue(coinMap) < this.gumballPrice) {
+             int coinNeeded = this.gumballPrice - this.getTotalValue(coinMap);
+             System.out.println("Still need ￠" + coinNeeded + " to get a gumball.");
          }
     }
 
     public void turnCrank()
     {
-        if ( this.curr_money == this.price)
-        {
-            if ( this.num_gumballs > 0 )
-            {
-                this.num_gumballs-- ;
-                this.curr_money = 0 ;
-                for(Integer key : coin_type.keySet()) {    // delete coins;
-                    coin_type.put(key,0);  //delete coins;
-                }
-                System.out.println( "Thanks for your quarter.  Gumball Ejected!" ) ;
-            }
-            else
-            {
-                System.out.println( "Sorry, we are out of gumball and your money will reject!" ) ;
-                ejectQuarter();
-            }
-        }
-        else
-        {
-            int money_still_need = price - curr_money;
-            System.out.println("You still need ￠" + money_still_need);
+        // check if there is still have gumballs in machine
+        // also check coin total value to see if get gumball price
+        if (this.gumballNum == 0) {
+            System.out.println( "Sorry, we are out of gumball and your coins will be ejected!" ) ;
+            this.initCoinMap();
+            System.out.println("All coins are ejected.");
+        } else if (this.getTotalValue(coinMap) != this.gumballPrice) {
+            System.out.println( "The coin value not match the gumball price, and your coins will be ejected!" ) ;
+            this.initCoinMap();
+        } else {
+            this.gumballNum--;
+            System.out.println("One gumball with price " + this.gumballPrice + " is ejected.");
+            this.initCoinMap();
         }
     }
 
-    public void ejectQuarter() {
-        for(Integer key : this.coin_type.keySet()) {
-            if(this.coin_type.get(key) != 0)
-            System.out.println("You have ejected " + this.coin_type.get(key) + " coin of ￠" + key);
-            this.coin_type.put(key,0);  //delete coins;
+    private int getTotalValue(Map<Integer, Integer> hashMap) {
+        int totalValue = 0;
+        for (int key : hashMap.keySet()) {
+            totalValue += hashMap.get(key) * key;
         }
-        this.curr_money = 0;
-
+        return totalValue;
     }
+
+    private void initCoinMap() {
+        for (int key : coinMap.keySet()) {
+            this.coinMap.put(key, 0);
+        }
+    }
+
 
     @Override
     public String toString() {
-
-        String string2 = new String();
-        for(int key : this.coin_type.keySet()) {
-            string2 = string2 + " ￠" + key + " ";
+        StringBuffer sb =  new StringBuffer();
+        for(int key : this.coinMap.keySet()) {
+            sb.append("￠" + key + " ");
         }
-        return "Gumball Machine has " + num_gumballs + " gumballs now!\n"  +
-                "The cost of a Gumball is ￠" + this.price +
-                " and we accept " + string2 ;
+        return "Gumball Machine has " + gumballNum + " gumballs now!\n"  +
+                "The cost of a Gumball is ￠" + this.gumballPrice +
+                " and we accept " + sb.toString() ;
     }
 }
