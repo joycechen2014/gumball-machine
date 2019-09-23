@@ -8,14 +8,15 @@ public class GumballMachine
 
     private int gumballNum = 0;
     private boolean dispenseBall = false;
-    private Map<Integer,Integer> coinMap = new HashMap<Integer, Integer>();
+    private Map<Integer,Integer> coinMap;
     private int gumballPrice = 0;
-    private int currentMoney = 0;
+    private int totalValue;
 
     public GumballMachine(int size , int[] coinTypes, int gumballPrice)
     {
         // initialise Gumball Machine variables
         this.gumballNum = size;
+        this.coinMap = new HashMap<>();
         // set coin HashMap base on coin type
         for(int coinType : coinTypes) {
             // put coin type and number into coin map
@@ -32,10 +33,11 @@ public class GumballMachine
              // all coins are ejected
              this.initCoinMap();
              System.out.println("All coins are ejected.");
-
+             return;
          }
          else {
-             this.coinMap.put(coinType, this.coinMap.get(coinType) + 1);
+             this.coinMap.replace(coinType, this.coinMap.get(coinType) + 1);
+             System.out.println("Total coin value: " + this.getTotalValue(coinMap));
          }
 
          if (this.getTotalValue(coinMap) < this.gumballPrice) {
@@ -53,29 +55,29 @@ public class GumballMachine
             this.initCoinMap();
             System.out.println("All coins are ejected.");
         } else if (this.getTotalValue(coinMap) != this.gumballPrice) {
-            System.out.println( "The coin value not match the gumball x price, and your coins will be ejected!" ) ;
+            System.out.println( "The coin value not match the gumball price, and your coins will be ejected!" ) ;
             this.initCoinMap();
         } else {
             this.gumballNum--;
             System.out.println("One gumball with price " + this.gumballPrice + " is ejected.");
+            System.out.println("Gumball machine has " + this.gumballNum + " gumballs now.");
             this.initCoinMap();
         }
     }
 
     private int getTotalValue(Map<Integer, Integer> hashMap) {
-        int totalValue = 0;
+        this.totalValue = 0;
         for (int key : hashMap.keySet()) {
-            totalValue += hashMap.get(key) * key;
+            this.totalValue += hashMap.get(key) * key;
         }
         return totalValue;
     }
 
     private void initCoinMap() {
         for (int key : coinMap.keySet()) {
-            this.coinMap.put(key, 0);
+            this.coinMap.replace(key, 0);
         }
     }
-
 
     @Override
     public String toString() {

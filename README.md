@@ -25,3 +25,4 @@ gumballMachine.turnCrank();
 
 ## Testing
 Use GumballMachineTest to do the test. 
+
