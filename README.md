@@ -28,6 +28,6 @@ Use GumballMachineTest to do the test.
 GumballMachine1:
 ![image](https://github.com/gopinathsjsu/assignment-1-gumball-joycechen2014/blob/master/GumbalMachine1.png)
 GumballMachine2:
-[image](https://github.com/gopinathsjsu/assignment-1-gumball-joycechen2014/blob/master/GumballMachine2.png)
+![image](https://github.com/gopinathsjsu/assignment-1-gumball-joycechen2014/blob/master/GumballMachine2.png)
 GumballMachine3:
-[image](https://github.com/gopinathsjsu/assignment-1-gumball-joycechen2014/blob/master/GumballMachine3.png)
+![image](https://github.com/gopinathsjsu/assignment-1-gumball-joycechen2014/blob/master/GumballMachine3.png)
