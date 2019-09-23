@@ -26,3 +26,6 @@ gumballMachine.turnCrank();
 ## Testing
 Use GumballMachineTest to do the test. 
 
+![image](https://github.com/gopinathsjsu/assignment-1-gumball-joycechen2014/blob/master/GumbalMachine1.png)
+[image](https://github.com/gopinathsjsu/assignment-1-gumball-joycechen2014/blob/master/GumbalMachine2.png)
+[image](https://github.com/gopinathsjsu/assignment-1-gumball-joycechen2014/blob/master/GumbalMachine3.png)
